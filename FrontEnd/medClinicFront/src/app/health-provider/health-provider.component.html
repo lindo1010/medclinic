@@ -1,0 +1,60 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>local_hospital</mat-icon>
+  </button>
+  <span>Medical Project</span>
+  <span class="example-spacer"></span>
+  <button mat-raised-button (click)="routToMedicalClinic()">Medical Clinic</button>
+</mat-toolbar>
+
+
+<div class="container">
+  <div style="margin-top: 10px">
+    <mat-form-field appearance="standard">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="healthProviderId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+          <td mat-cell *matCellDef="let row"> {{row.healthProviderId}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="healthProviderName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let row"> {{row.healthProviderName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="clinicName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Clinic Name </th>
+          <td mat-cell *matCellDef="let row"> {{row.clinicName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button (click)="editHealthProvider(row)" color="white">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="deleteHealthProvider(row.id)" color="warn">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
+  </div>
+  <button mat-raised-button style="margin-top: 8px" (click)="openDialog()">Add Provider</button>
+</div>
